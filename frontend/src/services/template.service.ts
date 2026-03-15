@@ -1,5 +1,5 @@
 import { api } from './api';
-import { Template, TemplateUploadRequest } from '../types/template.types';
+import { Template } from '../types/template.types';
 
 /**
  * Template Service

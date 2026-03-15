@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Image, Wand2, User, X } from 'lucide-react';
-import { useUIStore } from '../../stores/uiStore';
 import { useAuthStore } from '../../stores/authStore';
 
 interface MobileMenuProps {

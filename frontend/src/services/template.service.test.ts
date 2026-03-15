@@ -103,7 +103,7 @@ describe('templateService', () => {
       const file = new File(['content'], 'test.png', { type: 'image/png' });
       const onProgress = vi.fn();
       
-      vi.mocked(api.post).mockImplementation((url, data, config) => {
+      vi.mocked(api.post).mockImplementation((_url, _data, config) => {
         // Simulate progress callback
         if (config?.onUploadProgress) {
           config.onUploadProgress({ loaded: 50, total: 100 } as any);

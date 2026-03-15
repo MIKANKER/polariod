@@ -70,9 +70,9 @@ export const useTemplates = () => {
       // Return context with the snapshot
       return { previousTemplates };
     },
-    onError: (error, templateId, context) => {
+    onError: (error, _templateId, context) => {
       // Rollback to the previous value on error
-      if (context?.previousTemplates) {
+      if (context && typeof context === 'object' && 'previousTemplates' in context && context.previousTemplates) {
         queryClient.setQueryData(['templates'], context.previousTemplates);
       }
       console.error('Template deletion failed:', error);

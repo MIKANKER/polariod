@@ -46,7 +46,7 @@ describe('ErrorMessage', () => {
   });
 
   it('should style with error colors', () => {
-    const { container } = render(<ErrorMessage message="Error" />);
+    render(<ErrorMessage message="Error" />);
     const alert = screen.getByRole('alert');
     expect(alert).toHaveClass('bg-red-50', 'border-red-200');
   });
