@@ -25,7 +25,7 @@ class TemplateManager:
             supabase_client: Authenticated Supabase client instance
         """
         self.supabase = supabase_client
-        self.bucket_name = "custom-templates"
+        self.bucket_name = "templates"
         self.default_photo_rect_norm = {"x": 0.39, "y": 0.48, "w": 0.22, "h": 0.22}
 
     def validate_png(self, buffer: bytes) -> dict:

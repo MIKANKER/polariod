@@ -165,7 +165,8 @@ def compose_template(photo: Image.Image, template: Image.Image, options: dict[st
     if rect.w <= 0 or rect.h <= 0:
         raise HTTPException(status_code=400, detail="Rect inválido")
 
-    fit: FitMode = options.get("fit") if options.get("fit") in ("cover", "contain") else "cover"
+    fit_value = options.get("fit")
+    fit: FitMode = fit_value if fit_value in ("cover", "contain") else "cover"
     offset_x = float(options.get("offsetX", 0))
     offset_y = float(options.get("offsetY", 0))
 
@@ -224,10 +225,11 @@ app.add_middleware(
 # Initialize Supabase client
 SUPABASE_URL = os.getenv("SUPABASE_URL", "")
 SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY", "")
+SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY", "")
 
 supabase_client: Optional[Client] = None
-if SUPABASE_URL and SUPABASE_ANON_KEY:
-    supabase_client = create_client(SUPABASE_URL, SUPABASE_ANON_KEY)
+if SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY:
+    supabase_client = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
 
 def get_user_id_from_token(authorization: Optional[str]) -> str:
