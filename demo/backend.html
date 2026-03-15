@@ -1,0 +1,51 @@
+﻿<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Polaroid (Backend API demo)</title>
+    <style>
+      body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; margin: 24px; }
+      .row { display: grid; gap: 10px; max-width: 720px; }
+      input, button, textarea { padding: 10px 12px; font: inherit; }
+      img { max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 10px; }
+      .hint { color: #555; font-size: 13px; line-height: 1.35; }
+      .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      @media (max-width: 700px) { .two { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <h1>Backend API demo</h1>
+    <p class="hint">
+      Requiere un backend corriendo en <code>http://localhost:8000</code>.
+      Si subes la plantilla en el campo <code>template</code>, no necesitas guardarla en <code>assets/templates</code>.
+    </p>
+
+    <div class="row">
+      <div class="two">
+        <div>
+          <div class="hint">Foto (image)</div>
+          <input id="file" type="file" accept="image/*" />
+        </div>
+        <div>
+          <div class="hint">Plantilla (template) opcional</div>
+          <input id="template" type="file" accept="image/*" />
+        </div>
+      </div>
+
+      <textarea id="options" rows="8">{
+  "template": "sprite",
+  "fit": "cover",
+  "offsetX": 0,
+  "offsetY": 0,
+  "photoRectNorm": {"x": 0.39, "y": 0.48, "w": 0.22, "h": 0.22},
+  "format": "png"
+}</textarea>
+      <button id="run">Enviar a backend</button>
+      <div id="status" class="hint"></div>
+      <img id="out" alt="resultado" />
+    </div>
+
+    <script type="module" src="./backend.js"></script>
+  </body>
+</html>

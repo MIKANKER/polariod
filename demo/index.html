@@ -1,0 +1,217 @@
+﻿<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Polaroid Demo</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #0b0f14;
+        --panel: rgba(255, 255, 255, 0.06);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.65);
+        --border: rgba(255, 255, 255, 0.14);
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+        background: radial-gradient(1200px 800px at 20% 10%, #142033 0%, var(--bg) 60%);
+        color: var(--text);
+      }
+      .wrap {
+        max-width: 1100px;
+        margin: 32px auto;
+        padding: 0 16px 40px;
+      }
+      header {
+        display: flex;
+        gap: 16px;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+      h1 {
+        font-size: 18px;
+        margin: 0;
+        letter-spacing: 0.2px;
+      }
+      .hint {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: 16px;
+      }
+      @media (max-width: 920px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 14px;
+        backdrop-filter: blur(10px);
+      }
+      .panel h2 {
+        margin: 0 0 10px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.88);
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 120px;
+        gap: 10px;
+        align-items: center;
+        padding: 7px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .row:first-of-type {
+        border-top: none;
+      }
+      label {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      input[type="range"] {
+        width: 100%;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(0, 0, 0, 0.25);
+        color: var(--text);
+        outline: none;
+      }
+      input[type="color"], select, button {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(0, 0, 0, 0.25);
+        color: var(--text);
+        outline: none;
+      }
+      button {
+        cursor: pointer;
+        border-color: rgba(125, 211, 252, 0.5);
+      }
+      button:hover {
+        border-color: rgba(125, 211, 252, 0.9);
+      }
+      .stage {
+        min-height: 520px;
+        display: grid;
+        place-items: center;
+        padding: 12px;
+      }
+      #out canvas {
+        max-width: 100%;
+        height: auto;
+      }
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .small {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 10px;
+        line-height: 1.35;
+      }
+      .file {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .kbd {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        font-size: 12px;
+        padding: 2px 6px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 7px;
+        background: rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>Polaroid demo</h1>
+        <div class="hint">Carga una imagen y ajusta el marco. Tip: abre este archivo con doble click.</div>
+      </header>
+
+      <div class="grid">
+        <div class="panel">
+          <h2>Entrada</h2>
+          <div class="file">
+            <input id="file" type="file" accept="image/*" />
+            <div class="small">Si no cargas nada, usa el atajo <span class="kbd">Ctrl</span> + <span class="kbd">V</span> para pegar una imagen (Chrome/Edge).</div>
+          </div>
+
+          <h2 style="margin-top:14px">Marco</h2>
+          <div class="row">
+            <label for="aspect">Aspecto foto (ancho/alto)</label>
+            <input id="aspect" type="range" min="0.6" max="1.6" step="0.05" value="1" />
+          </div>
+          <div class="row">
+            <label for="padding">Padding</label>
+            <input id="padding" type="range" min="10" max="90" step="1" value="36" />
+          </div>
+          <div class="row">
+            <label for="bottom">Padding bottom</label>
+            <input id="bottom" type="range" min="40" max="220" step="1" value="105" />
+          </div>
+          <div class="row">
+            <label for="radius">Radio</label>
+            <input id="radius" type="range" min="0" max="40" step="1" value="18" />
+          </div>
+          <div class="row">
+            <label for="frame">Color marco</label>
+            <input id="frame" type="color" value="#ffffff" />
+          </div>
+          <div class="row">
+            <label for="fit">Encaje</label>
+            <select id="fit">
+              <option value="cover">cover</option>
+              <option value="contain">contain</option>
+            </select>
+          </div>
+          <div class="row">
+            <label for="ox">Offset X (cover)</label>
+            <input id="ox" type="range" min="-1" max="1" step="0.01" value="0" />
+          </div>
+          <div class="row">
+            <label for="oy">Offset Y (cover)</label>
+            <input id="oy" type="range" min="-1" max="1" step="0.01" value="0" />
+          </div>
+
+          <h2 style="margin-top:14px">Texto</h2>
+          <div class="row">
+            <label for="caption">Caption</label>
+            <input id="caption" type="text" placeholder="Ej: Viaje 2026" value="Bogotá • 2026-03-11" />
+          </div>
+
+          <div class="actions">
+            <button id="downloadPng">Descargar PNG</button>
+            <button id="downloadJpg">Descargar JPG</button>
+          </div>
+          <div class="small">Exporta desde el Canvas generado. En móvil, mantén presionado (según navegador).</div>
+        </div>
+
+        <div class="panel stage">
+          <div id="out" class="stage"></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="./demo.js"></script>
+  </body>
+</html>
