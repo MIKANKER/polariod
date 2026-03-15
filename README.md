@@ -2,7 +2,35 @@
 
 Función ligera (sin dependencias) para convertir una foto en una imagen estilo Polaroid usando Canvas 2D, con marcos personalizables.
 
-## Uso rápido
+## 🚀 Despliegue Rápido
+
+### Frontend (React + Vite)
+
+El frontend está listo para desplegar en Vercel o Netlify.
+
+**Despliegue en Vercel:**
+1. Ve a [Vercel](https://vercel.com) y conéctate con tu cuenta de GitHub.
+2. Importa el repositorio `MIKANKER/polariod`.
+3. Selecciona la carpeta `frontend` como directorio raíz.
+4. Configura las variables de entorno (ver abajo).
+5. ¡Despliega!
+
+**Variables de entorno necesarias:**
+- `VITE_SUPABASE_URL`: URL de tu proyecto Supabase
+- `VITE_SUPABASE_ANON_KEY`: Clave anónima de Supabase
+
+### Backend (Python/FastAPI)
+
+El backend Python está listo para desplegar en Vercel (Serverless) o Railway.
+
+**Despliegue en Vercel:**
+1. Ve a "Add New..." > "Project".
+2. Importa el mismo repositorio.
+3. Selecciona la carpeta `backend/python` como directorio raíz.
+4. Configura las variables de entorno de Supabase.
+5. ¡Despliega!
+
+## Uso rápido local
 
 Abrir `demo/index.html` en un navegador moderno y cargar una imagen.
 
